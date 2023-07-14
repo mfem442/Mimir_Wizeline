@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -15,14 +16,34 @@ import Maps from './Maps/Maps';
 import HomeIcon from '@mui/icons-material/Home';
 
 export default function Forms() {
-  const handleSubmit = (event) => {
+  const [price, setPrice] = useState('');
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+  
+    const response = await fetch("/prediction/", {
+      method: 'POST',
+      body: JSON.stringify({
+        bedrooms: parseFloat(data.get('bedrooms')),
+        bathrooms: parseFloat(data.get('bathrooms')),
+        area: parseFloat(data.get('area')),
+        Latitud: 20.5287517,
+        Longitud: -105.9182489
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
     });
+  
+    if (response.ok) {
+      const responseData = await response.json();
+      setPrice(responseData.house_price);
+    } else {
+      console.log('Error:', response.status);
+    }
   };
+  
 
   return (
     <>
@@ -87,7 +108,7 @@ export default function Forms() {
               </Box>
               <Box  sx={{ mt: 1 }}>
                 <Typography component="h1" variant="h7">
-                  Precio:
+                  Precio: {price}
                 </Typography>
               </Box>
             </Box>
