@@ -10,20 +10,14 @@ house = pickle.load(pickle_in)
 
 #Predict house price
 @app.post("/predict")
-async def predict_houseprice(data: House) -> float:
-    data = data.dict()
-    bedrooms = data['bedrooms']
-    bathrooms = data['bathrooms']
-    area = data['area']
-    Latitud = data['Latitud']
-    Longitud = data['Longitud']
-    print(house.predict([[bedrooms, bathrooms, area, Latitud, Longitud]]))
+async def predict_house_price(data: House):
+    bedrooms = data.bedrooms
+    bathrooms = data.bathrooms
+    area = data.area
+    Latitud = data.Latitud
+    Longitud = data.Longitud
     prediction = house.predict([[bedrooms, bathrooms, area, Latitud, Longitud]])
-    return {'prediction': prediction}
-
-@app.get("/items/{item_id}")
-async def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
+    return {'house_price': prediction[0].astype(float)}
 
 if __name__ == '__main__':
     uvicorn.run(app, host='127.0.0.1', port=8000)

@@ -134,10 +134,10 @@ Esto es muy bueno, pese a que solo se estuvieron trabajando con un numero chiqui
 # Aplicación
 La aplicación sigue la siguiente estructura:
 ```
-app:
-	-server
-	-client
-	-model
+app/
+├── client
+├── model
+├── server
 ```
 ## Instalación
 ### Pre-requisitos
@@ -150,3 +150,7 @@ npm install
 ```
 pip install -r requirements.txt
 ```
+
+### Ejecución:
+- **Client**: `npm start`
+- **Server**: `uvicorn main:app --reload`
