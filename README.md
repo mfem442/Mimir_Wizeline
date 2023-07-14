@@ -1,7 +1,6 @@
-# Proyecto Mimir -
+# Proyecto "Mimir"
 
 ## Equipo 19 "Se cayo el Internet"
-
 'Mímir, un gigante sabio de la mitología nórdica. Mímir era conocido por su inmenso conocimiento y por beber del pozo de la sabiduría, ubicado en las raíces del árbol del mundo, Yggdrasil. Se dice que quien bebía del pozo adquiría un conocimiento profundo y la capacidad de ver el pasado, el presente y el futuro. Mímir fue consultado en varias ocasiones por los dioses nórdicos para obtener consejos y conocimiento sobre eventos futuros.'
 
 # Documentación:
@@ -12,8 +11,8 @@ Nuestro proyecto se basa en un modelo de aprendizaje automático que permite rea
 
 Al combinar la potencia del aprendizaje automático con los datos geográficos, estamos abriendo nuevas puertas y generando insights valiosos que antes parecían inalcanzables. Nuestra tecnología no solo proporciona una visión más precisa y detallada de los precios de los inmuebles, sino que también aporta una perspectiva vanguardista para el desarrollo estratégico de los sectores inmobiliario y financiero.
 
-  
-# Rascado de datos:
+# Modelado
+## Rascado de datos:
 
 Se realizo un rascado masivo de la API de OpenStreetMaps, (Overpassturbo), con el objetivo de extraer información geográfica valiosa, esto con el objetivo de tener un mapeo significativo de los inmuebles de la zona metropolitana de Guadalajara.
 
@@ -42,11 +41,11 @@ Variables del dataset:
 13. latitud
 14. longitud
 
-# Aumentación de los datos del dataset
+## Aumentación de los datos del dataset
 
 (En proceso aún).  
 
-# Modelo:
+## Herramientas y Librerías:
 
 Utilizamos Python como lenguaje de programación y se hace uso de varias bibliotecas y herramientas de Machine Learning para realizar análisis de datos geográficos y predecir los precios de los inmuebles. A continuación, se muestra una documentación de las bibliotecas principales utilizadas:
 
@@ -65,15 +64,7 @@ Es una combinación de árboles predictores (los arboles de decisión) tal que c
 4. Para cada nodo del árbol, elegir aleatoriamente _m_ variables en las cuales basar la decisión. Calcular la mejor partición del conjunto de entrenamiento a partir de las _m_ variables. (Adjuntamos una imagen de ejemplo)
 ![[Pasted image 20230714032938.png]]
 
-**Nota:** Instalar todo sobre las siguientes dependencias :DDDD
-
-```python
-
-pip install pandas numpy seaborn matplotlib scikit-learn xgboost
-
-```
-
-### Pasos:
+## Pasos:
 
 1. Primero se realizo la lectura de los datos del csv ya procesado y tradado.
 2. Filtro de datos
@@ -99,7 +90,7 @@ Se divide el conjunto de datos en conjuntos de entrenamiento y prueba, utilizand
 
 **Nota:** Por temas de tiempo reconozco que no se debería de utilizar el SimpleImputer para imputar los valores faltantes en los conjuntos de entrenamiento y prueba, pero esta es una solución rapida de momento. Mas adelante se podría considerar otra forma.
 
-### Creación y entrenamiento del modelo
+## Creación y entrenamiento del modelo
 
 Primero se hizo la creación de un modelo de Random Forest utilizando la herramienta GridSearchCV para la búsqueda de hiperparámetros óptimos.
 
@@ -127,11 +118,11 @@ modelo = xgb.XGBRegressor(n_estimators=1000, max_depth=6, learning_rate=0.1, sub
  
 Con todo esto se procedio a entrenar el modelo. Una vez que el modelo se entreno se le pidio que realizara las predicciónes sobre el conjunto de prueba X_test, con lo cual se hizo Cross-validation.
 
-#### Mean absolute porcentual error
+### Mean absolute porcentual error
 
 El MAPE mide el promedio del porcentaje absoluto de error entre las predicciones y los valores reales. El MAPE es una métrica útil para evaluar el rendimiento del modelo de Random Forest en términos de la precisión de las predicciones. Un MAPE más bajo indica que el modelo tiene un menor error porcentual medio, lo que implica una mayor precisión en las predicciones.
 
-## Resultados:  
+# Resultados:  
 
 Una vez que se entreno el modelo y se hicieron las predicciones sobre el conjunto de prueba, y ademas se calculo el error absoluto medio procentual, se obtuvo un MAPE aproximadamente de $0.332443793 ...$, esto a pesar de que simplemente se trabajo con un dataset de 253 datos y solo se consideraron (de momento) 5 features (variables explicativas).
 
@@ -140,6 +131,22 @@ Esto es muy bueno, pese a que solo se estuvieron trabajando con un numero chiqui
 (De momento, tenemos este resultado, estamos esperando la prueba de la aumentacion de los datos)
 
 
-# Sobre el despliegue...
-
-
+# Aplicación
+La aplicación sigue la siguiente estructura:
+```
+app:
+	-server
+	-client
+	-model
+```
+## Instalación
+### Pre-requisitos
+- Tener Python3 instalado
+- **Client**: ejecutar lo siguiente en el path de la carpeta
+```
+npm install
+```
+- **Server y Model**: ejecutar lo siguiente en el path de cada respectiva carpeta
+```
+pip install -r requirements.txt
+```

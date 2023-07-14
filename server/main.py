@@ -2,6 +2,7 @@ from typing import Union
 from fastapi import FastAPI
 import pickle
 from House import House
+import uvicorn
 
 app = FastAPI()
 pickle_in = open("house.pkl","rb")
